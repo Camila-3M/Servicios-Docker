@@ -1,0 +1,22 @@
+services:
+  # Servicio 4: Autenticación 
+  auth-server:
+    build: ./auth-service
+    container_name: auth_container
+    ports:
+      - "5000:5000"
+    networks:
+      - red-proyecto
+
+  # Servicio 2: CRUD de Productos (NUEVO)
+  crud-service:
+    build: ./crud-service
+    container_name: crud_container
+    ports:
+      - "4000:4000"
+    networks:
+      - red-proyecto
+
+networks:
+  red-proyecto:
+    driver: bridge

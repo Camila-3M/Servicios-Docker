@@ -1,0 +1,32 @@
+services:
+
+  db:
+    image: postgres:15
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: projectdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db_init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: ./backend
+    container_name: flask_api
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_NAME: projectdb
+      DB_USER: admin
+      DB_PASSWORD: admin123
+
+volumes:
+  db_data:

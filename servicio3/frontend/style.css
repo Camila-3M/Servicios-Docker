@@ -1,0 +1,85 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+/* Contenedor principal */
+.container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Título principal */
+h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 20px;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+/* Texto descriptivo */
+.descripcion {
+    max-width: 700px;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+/* Tarjeta central */
+.card {
+    background: rgba(255, 255, 255, 0.18);
+    padding: 30px 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+}
+
+/* Título de tarjeta */
+.card h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Texto dentro de la tarjeta */
+.card p {
+    margin: 12px 0;
+    font-size: 16px;
+}
+
+/* Botón */
+button {
+    margin-top: 20px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 25px;
+    background: white;
+    color: #764ba2;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: #f1f1f1;
+    transform: scale(1.05);
+}

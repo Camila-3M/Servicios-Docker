@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>SISTEMA INTEGRADO DOCKER 2026</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root { --primary: #2563eb; --sidebar: #1e293b; --bg: #f8fafc; --success: #22c55e; --danger: #ef4444; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); overflow: hidden; }
+
+        /* PANTALLA DE LOGIN */
+        #pantalla-login {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+        }
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        .login-card h2 { color: var(--sidebar); margin-bottom: 25px; }
+
+        /* PANTALLA DE PRODUCTOS (Oculta al inicio) */
+        #pantalla-productos {
+            display: none; /* Se activa con JS */
+            height: 100vh;
+            flex-direction: row;
+        }
+
+        /* ESTILOS DASHBOARD */
+        .sidebar { width: 260px; background: var(--sidebar); color: white; padding: 25px; display: flex; flex-direction: column; }
+        .main { flex: 1; padding: 40px; overflow-y: auto; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-blue { background: var(--primary); color: white; width: 100%; }
+        .btn-green { background: var(--success); color: white; }
+        .btn-red { background: var(--danger); color: white; padding: 5px 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; padding: 12px; background: #f1f5f9; color: #64748b; }
+        td { padding: 12px; border-bottom: 1px solid #eee; }
+        
+        #tokenDisplay { background: #000; color: #4ade80; padding: 10px; font-family: monospace; font-size: 10px; border-radius: 5px; margin-top: 15px; word-break: break-all; }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-login">
+        <div class="login-card">
+            <i class="fa-brands fa-docker" style="font-size: 3rem; color: var(--primary);"></i>
+            <h2>Acceso al Sistema</h2>
+            <input type="text" id="u" value="docente">
+            <input type="password" id="p" value="password123">
+            <button class="btn-blue" onclick="entrar()">Iniciar Sesión</button>
+        </div>
+    </div>
+
+    <div id="pantalla-productos">
+        <div class="sidebar">
+            <h3><i class="fa-solid fa-gauge-high"></i> Panel Control</h3>
+            <p><i class="fa-solid fa-circle" style="color: #4ade80"></i> Online</p>
+            <div id="tokenDisplay"></div>
+            <div style="margin-top: auto; font-size: 11px; opacity: 0.5;">
+                Módulo v2.0 - Docker Compose
+            </div>
+        </div>
+
+        <div class="main">
+            <div class="card">
+                <h2><i class="fa-solid fa-boxes-stacked"></i> Inventario de Productos</h2>
+                <div style="display: flex; gap: 10px; margin-bottom: 25px;">
+                    <input type="text" id="nom" placeholder="Nombre del producto" style="flex: 2">
+                    <input type="number" id="pre" placeholder="Precio" style="flex: 1">
+                    <button class="btn-green" onclick="guardar()"><i class="fa-solid fa-plus"></i> Añadir</button>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Producto</th><th>Precio</th><th>Acción</th></tr>
+                    </thead>
+                    <tbody id="tabla-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let globalToken = "";
+
+        // FUNCIÓN PARA LOGIN
+        function entrar() {
+            const user = document.getElementById('u').value;
+            const pass = document.getElementById('p').value;
+
+            fetch('http://localhost:5000/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username: user, password: pass})
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.success) {
+                    globalToken = data.token;
+                    // CAMBIO DE PANTALLA
+                    document.getElementById('pantalla-login').style.display = 'none';
+                    document.getElementById('pantalla-productos').style.display = 'flex';
+                    
+                    document.getElementById('tokenDisplay').innerText = "JWT: " + globalToken;
+                    cargar();
+                } else {
+                    alert("Usuario o clave incorrecta");
+                }
+            })
+            .catch(err => alert("Error: Los servicios Docker no responden"));
+        }
+
+        // FUNCIÓN PARA CARGAR PRODUCTOS
+        function cargar() {
+            fetch('http://localhost:4000/productos')
+            .then(res => res.json())
+            .then(productos => {
+                const lista = document.getElementById('tabla-body');
+                lista.innerHTML = "";
+                productos.forEach(p => {
+                    const row = "<tr><td>#" + p.id + "</td><td>" + p.nombre + "</td><td>$" + p.precio + "</td>" +
+                                "<td><button class='btn-red' onclick='eliminar(" + p.id + ")'><i class='fa-solid fa-trash'></i></button></td></tr>";
+                    lista.innerHTML += row;
+                });
+            });
+        }
+
+        // FUNCIÓN PARA INSERTAR
+        function guardar() {
+            const n = document.getElementById('nom').value;
+            const pr = document.getElementById('pre').value;
+            if(!n || !pr) return alert("Completa los datos");
+
+            fetch('http://localhost:4000/productos', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({nombre: n, precio: pr})
+            })
+            .then(() => {
+                document.getElementById('nom').value = "";
+                document.getElementById('pre').value = "";
+                cargar();
+            });
+        }
+
+        // FUNCIÓN PARA ELIMINAR
+        function eliminar(id) {
+            fetch('http://localhost:4000/productos/' + id, { method: 'DELETE' })
+            .then(() => cargar());
+        }
+    </script>
+</body>
+</html>

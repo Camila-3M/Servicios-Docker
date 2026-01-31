@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Frontend Docker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <h1>Servicio Frontend</h1>
+        <p class="subtitle">Proyecto de Sistemas Operativos</p>
+
+        <div class="descripcion">
+            <p>
+                Este proyecto implementa una arquitectura cliente-servidor utilizando
+                contenedores Docker. El frontend se encarga de mostrar la información
+                obtenida desde un backend desarrollado en Flask, demostrando la correcta
+                comunicación entre servicios mediante Docker Compose.
+            </p>
+        </div>
+
+        <div class="card">
+
+            <h2>Estado del Backend</h2>
+
+            <p>
+                <strong>Mensaje:</strong>
+                <span id="estado">Cargando...</span>
+            </p>
+
+            <p>
+                <strong>Fecha:</strong>
+                <span id="fecha">Cargando...</span>
+            </p>
+
+            <p>
+                <strong>Sistema Operativo:</strong>
+                <span id="sistema">Cargando...</span>
+            </p>
+
+            <button onclick="consultarBackend()">
+                Actualizar información
+            </button>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
