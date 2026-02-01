@@ -42,6 +42,8 @@ Acceso:
 | Health   | [http://localhost:8000/health](http://localhost:8000/health) |
 | Data     | [http://localhost:8000/data](http://localhost:8000/data)     |
 
+---
+
 ## Servicio 2: API REST con Base de Datos PostgreSQL
 
 API REST conectada a una base de datos PostgreSQL con persistencia mediante volúmenes.
@@ -66,6 +68,8 @@ Acceso:
 | -------- | ------------------------------------------------------------ |
 | Health   | [http://localhost:8000/health](http://localhost:8000/health) |
 | Data     | [http://localhost:8000/data](http://localhost:8000/data)     |
+
+---
 
 ## Servicio 3: Backend + Frontend Web
 
@@ -99,6 +103,8 @@ Frontend
 | Servicio | URL                                            |
 | -------- | ---------------------------------------------- |
 | Web      | [http://localhost:8080](http://localhost:8080) |
+
+---
 
 ## Servicio 4: Servicio de Autenticación y CRUD con Node.js
 
