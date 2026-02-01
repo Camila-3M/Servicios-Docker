@@ -9,18 +9,18 @@ CORS(app)
 @app.route("/")
 def home():
     return jsonify({
-        "mensaje": "Backend funcionando correctamente",
+        "mensaje": "Backend funcionando correctamente 🚀",
         "fecha": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "sistema": platform.system(),
+        "sistema": platform.system()
     })
 
 @app.route("/info")
 def info():
     return jsonify({
         "proyecto": "Proyecto Docker Grupal",
-        "lenguaje": "Python flask",
+        "lenguaje": "Python Flask",
         "estado": "Activo",
-        "puerto": 5000,
+        "puerto": 5000
     })
 
 if __name__ == "__main__":

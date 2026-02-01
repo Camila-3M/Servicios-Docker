@@ -8,7 +8,6 @@
 <body>
 
     <div class="container">
-
         <h1>Servicio Frontend</h1>
         <p class="subtitle">Proyecto de Sistemas Operativos</p>
 
@@ -22,33 +21,16 @@
         </div>
 
         <div class="card">
-
             <h2>Estado del Backend</h2>
 
-            <p>
-                <strong>Mensaje:</strong>
-                <span id="estado">Cargando...</span>
-            </p>
+            <p><strong>Mensaje:</strong> <span id="estado">Conectando...</span></p>
+            <p><strong>Fecha:</strong> <span id="fecha"></span></p>
+            <p><strong>Sistema Operativo:</strong> <span id="sistema"></span></p>
 
-            <p>
-                <strong>Fecha:</strong>
-                <span id="fecha">Cargando...</span>
-            </p>
-
-            <p>
-                <strong>Sistema Operativo:</strong>
-                <span id="sistema">Cargando...</span>
-            </p>
-
-            <button onclick="consultarBackend()">
-                Actualizar información
-            </button>
-
+            <button onclick="consultarBackend()">Actualizar información</button>
         </div>
-
     </div>
 
     <script src="script.js"></script>
-
 </body>
 </html>

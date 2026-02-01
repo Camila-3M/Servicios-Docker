@@ -6,7 +6,7 @@ function consultarBackend() {
             document.getElementById("fecha").textContent = data.fecha;
             document.getElementById("sistema").textContent = data.sistema;
         })
-        .catch(error => {
+        .catch(() => {
             document.getElementById("estado").textContent = "Error al conectar con el backend";
             document.getElementById("fecha").textContent = "";
             document.getElementById("sistema").textContent = "";
